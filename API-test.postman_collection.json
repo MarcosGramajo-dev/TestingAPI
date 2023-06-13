@@ -1,0 +1,116 @@
+{
+	"info": {
+		"_postman_id": "d1cdd002-7ef2-473f-b637-ddfde7478fb3",
+		"name": "API test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24624411"
+	},
+	"item": [
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Verificar que la respuesta tenga un código de estado 200 (OK)\r",
+							"pm.test(\"Código de estado debe ser 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Verificar que la respuesta sea en formato JSON\r",
+							"pm.test(\"La respuesta debe ser en formato JSON\", function () {\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"// Verificar que la respuesta contenga un arreglo de posts\r",
+							"pm.test(\"La respuesta debe contener un arreglo de posts\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an(\"array\").and.to.have.length.above(0);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{https}}://{{url}}/posts",
+					"protocol": "{{https}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Código de estado debe ser 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"El body deber ser un JSON\", function () {\r",
+							"    pm.request.body.toJSON\r",
+							"})\r",
+							"\r",
+							"// Enviar solicitud POST con datos inválidos\r",
+							"pm.test(\"Crear nuevo post con datos inválidos\", function () {\r",
+							"    pm.sendRequest({\r",
+							"        url: 'https://jsonplaceholder.typicode.com/posts',\r",
+							"        method: 'POST',\r",
+							"        header: 'Content-Type: application/json',\r",
+							"        body: {\r",
+							"            mode: 'raw',\r",
+							"            raw: JSON.stringify({\r",
+							"                // Faltan datos\r",
+							"            })\r",
+							"        }\r",
+							"    }, function (err, response) {\r",
+							"        pm.expect(err).to.be.null;\r",
+							"        pm.expect(response).to.have.property('code', 201);\r",
+							"        pm.expect(response.json()).to.have.property('id');\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"userId\": 1,\r\n        \"id\": 1,\r\n        \"title\": \"Nuevo Post\",\r\n        \"body\": \"Una Descripcion\"\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{https}}://{{url}}/posts",
+					"protocol": "{{https}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
