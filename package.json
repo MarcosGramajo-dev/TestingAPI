@@ -1,0 +1,19 @@
+{
+  "name": "testapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MarcosGramajo-dev/TestingAPI.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MarcosGramajo-dev/TestingAPI/issues"
+  },
+  "homepage": "https://github.com/MarcosGramajo-dev/TestingAPI#readme"
+}
